@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f2f2f2;
+        }
+
+        .dice {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+        }
+
+        #diceContainer {
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        #rollButton {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 200px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="diceContainer">
+    <div class="dice-row">
+        <img id="die1" src="dice/die1.png" alt="blank image" class="dice">
+        <img id="die2" src="dice/die1.png" alt="blank image" class="dice">
+        <img id="die3" src="dice/die1.png" alt="blank image" class="dice">
+        <img id="die4" src="dice/die1.png" alt="blank image" class="dice">
+        <img id="die5" src="dice/die1.png" alt="blank image" class="dice">
+        <img id="die6" src="dice/die1.png" alt="blank image" class="dice">
+    </div>
+    <div class="dice-row">
+        <img id="die7" src="dice/die1.png" alt="blank image" class="dice">
+        <img id="die8" src="dice/die1.png" alt="blank image" class="dice">
+        <img id="die9" src="dice/die1.png" alt="blank image" class="dice">
+        <img id="die10" src="dice/die1.png" alt="blank image" class="dice">
+        <img id="die11" src="dice/die1.png" alt="blank image" class="dice">
+        <img id="die12" src="dice/die1.png" alt="blank image" class="dice">
+    </div>
+</div>
+
+<form action="#">
+    <input id="rollButton" type="button" value="Roll Dice">
+</form>
+
+<table>
+    <tr>
+        <th>Face</th>
+        <th>Percent</th>
+    </tr>
+    <tr id="row1">
+        <td>1</td>
+        <td id="percent1">0</td>
+    </tr>
+    <tr id="row2">
+        <td>2</td>
+        <td id="percent2">0</td>
+    </tr>
+    <tr id="row3">
+        <td>3</td>
+        <td id="percent3">0</td>
+    </tr>
+    <tr id="row4">
+        <td>4</td>
+        <td id="percent4">0</td>
+    </tr>
+    <tr id="row5">
+        <td>5</td>
+        <td id="percent5">0</td>
+    </tr>
+    <tr id="row6">
+        <td>6</td>
+        <td id="percent6">0</td>
+    </tr>
+</table>
+
+<script>
+    window.addEventListener("load", start);
+
+    var button = document.getElementById("rollButton");
+    button.addEventListener("click", rollDice);
+
+    var diceImages = [
+        document.getElementById("die1"),
+        document.getElementById("die2"),
+        document.getElementById("die3"),
+        document.getElementById("die4"),
+        document.getElementById("die5"),
+        document.getElementById("die6"),
+        document.getElementById("die7"),
+        document.getElementById("die8"),
+        document.getElementById("die9"),
+        document.getElementById("die10"),
+        document.getElementById("die11"),
+        document.getElementById("die12")
+    ];
+
+    function start() {
+        for (var i = 0; i < diceImages.length; i++) {
+            setImage(diceImages[i], 1);
+        }
+        updatePercentages();
+    }
+
+    function rollDice() {
+        for (var i = 0; i < diceImages.length; i++) {
+            setImage(diceImages[i]);
+        }
+        updatePercentages();
+    }
+
+    function setImage(dieImg, value = Math.floor(1 + Math.random() * 6)) {
+        dieImg.setAttribute("src", "dice/die" + value + ".png");
+        dieImg.setAttribute("alt", "die image with " + value + " spots");
+    }
+
+    function updatePercentages() {
+        for (var i = 1; i <= 6; i++) {
+            var count = 0;
+            for (var j = 0; j < diceImages.length; j++) {
+                var src = diceImages[j].getAttribute("src");
+                if (src.endsWith("die" + i + ".png")) {
+                    count++;
+                }
+            }
+            var percent = (count / diceImages.length) * 100;
+            document.getElementById("percent" + i).textContent = percent.toFixed(2);
+        }
+    }
+</script>
+
+</body>
+</html>
